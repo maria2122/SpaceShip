@@ -2,6 +2,9 @@ import pygame
 from scripts.settings import *
 from scripts.scene import Scene
 from scripts.menu import Menu
+from scripts.game import Game, SpaceShip
+from scripts.gameover import GameOver
+
 
 class StartGame:
 
@@ -10,15 +13,29 @@ class StartGame:
         pygame.init()
         pygame.mixer.init()
         pygame.font.init()
-
+        pygame.display.set_caption("SapaceShip")
         self.display = pygame.display.set_mode([WIDTH, HEIGHT])
-
+        self.current_scene = Scene()
         self.scene = "menu"
         self.current_scene = Menu()
+        self.fps = pygame.time.Clock()
+
 
     def run(self):
 
         while True:
+
+            if self.scene == "menu" and self.current_scene.active == False:
+                self.scene = "game"
+                self.current_scene = Game()
+
+            elif self.scene == "game" and self.current_scene.active == False:
+                self.scene = "gameover"
+                self.current_scene = GameOver()
+            elif self.scene == "gameover" and self.current_scene.active == False:
+                self.scene = "menu"
+                self.current_scene = Menu()
+
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

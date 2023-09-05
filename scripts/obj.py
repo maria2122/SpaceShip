@@ -2,7 +2,7 @@ import pygame
 
 # Classe Sprite traz uma série de recursos para tratar imagens
 class Obj(pygame.sprite.Sprite):
-    def __init__(self, img, *groups):
+    def __init__(self, img, pos, *groups):
         super().__init__(*groups)
         self.image = pygame.image.load(img)
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect(topleft=pos)
